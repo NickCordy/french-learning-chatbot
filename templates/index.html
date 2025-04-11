@@ -16,9 +16,11 @@
         <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-6 mx-auto text-center">
                 <div>
-                    <h1 class="text-info">French Chatbot Learning App</h1>
+                    <h1 class="text-info">French Learning App: Chatbot</h1>
                     <p class="fs-4 secondary-font">
-                        This app is designed to help improve French language skills. Simply write a message in English, and the conversation box will display its translation along with a response in French from the chatbot.                    </p>
+                        This app is designed to help improve French language skills. Simply write a message in English, and the conversation box will display its translation along with a response in French from the chatbot.
+                    </p>
+                    <a href="/lemma-guesser" class="btn btn-info">Go to Lemma Guesser</a>
                 </div>
             </div>
             <div class="col-md-5 mx-auto">
@@ -27,19 +29,24 @@
                         <h5>Conversation Box</h5>
                     </div>
                     <div class="card-body" style="height: 300px; overflow-y: auto;">
-                        {% for fra_sentence, eng_sentence in paired_conversations %}
-                        <div class="p-2 mb-1 fw-bold rounded bg-light {{ 'text-info bg-dark' if 'Bot:' in fra_sentence }}">
-                            {{ fra_sentence }}
-                            <div class="{{ 'text-white' if 'Bot:' in fra_sentence else 'text-muted' }}">
-                                <small>{{ eng_sentence }}</small>
+                        {% for exchange in conversation_history %}
+                        <div class="p-2 mb-1 fw-bold rounded bg-light">
+                            {{ exchange.user.fra }}
+                            <div class="text-muted">
+                                <small>{{ exchange.user.eng }}</small>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1 fw-bold rounded bg-light text-info bg-dark">
+                            {{ exchange.bot.fra }}
+                            <div class="text-white">
+                                <small>{{ exchange.bot.eng }}</small>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                     <div class="card-footer">
                         <form method="post">
-                            <input type="text" class="form-control" name="input" 
-                                placeholder="Write an English message to the chatbot">
+                            <input type="text" class="form-control" name="input" placeholder="Write an English message to the chatbot">
                             <input type="submit" value="Translate" class="btn btn-info mt-2 fw-bold">
                             <div id="spinner" class="text-center" style="display: none;">
                                 <div class="spinner-border text-info" role="status">
